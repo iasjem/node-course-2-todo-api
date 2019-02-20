@@ -1,10 +1,11 @@
 {
   "name": "todo-api",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha server/**/*.test.js",
+    "test-watch": "nodemon --exec \"npm test\"",
+    "start": "nodemon server/server.js"
   },
   "author": "",
   "license": "ISC",
@@ -13,5 +14,19 @@
     "express": "^4.16.4",
     "mongodb": "^2.2.5",
     "mongoose": "^4.5.9"
-  }
+  },
+  "devDependencies": {
+    "expect": "^1.20.2",
+    "mocha": "^5.2.0",
+    "supertest": "^2.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iasjem/node-course-2-todo-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/iasjem/node-course-2-todo-api/issues"
+  },
+  "homepage": "https://github.com/iasjem/node-course-2-todo-api#readme",
+  "description": ""
 }
