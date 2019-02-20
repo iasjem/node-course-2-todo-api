@@ -26,7 +26,7 @@ describe("POST /todos", () => {
                     expect(todos[0].text).toBe(text);
                     done();
                 }).catch((e) => done(e));
-            });
+        });
     });
 
     it("should not create todo with invalid body data", (done) => {
