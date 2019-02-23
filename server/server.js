@@ -6,12 +6,14 @@ const { ObjectID } = require('mongodb');
 const { mongoose } = require('./db/mongoose');
 const { Todo } = require('./models/todo');
 const { User } = require('./models/user');
+var {authenticate} = require('./middleware/authenticate');
 
 var app = express();
 const PORT = process.env.PORT;
 
 app.use(bodyParser.json());
 
+// Todo Routes
 app.post('/todos', (req, res) => {
     var todo = new Todo({
         text: req.body.text
@@ -80,11 +82,15 @@ app.patch('/todos/:id', (req, res) => {
     });
 });
 
-// POST Users
-app.post('/users', (req, res) => {
+// User Routes
+app.post('/users', authenticate, (req, res) => {
     var body = _.pick(req.body, ['email', 'password']);
     var user = new User(body);
-    user.save().then(() => user.generateAuthToken()).then((token) => res.header('x-auth', token).send(user)).catch((e) => res.status(400).send(e));
+    user.save().then(() => user.generateAuthToken()).then((token) => res.header('x-auth', token).send(user)).catch((e) => res.status(400).send());
+});
+
+app.get('/users/me', authenticate, (req, res) => {
+    res.send(req.user);
 });
 
 app.listen(PORT, () => console.log('Started on port 3000'));
